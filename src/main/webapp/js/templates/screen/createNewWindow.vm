@@ -1,0 +1,119 @@
+$page.setTitle("创建新Window功能")
+
+<form action="" method="post">
+    $csrfToken.hiddenField
+    <input type="hidden" name="action" value="create_newWindow_action"/>
+
+	#set ($group = $form.createNewWindow.defaultInstance)
+    <div class="row blank-space">
+    	<div class="col-md-1">
+      	</div>
+    	<div class="col-md-11">
+    		<div class="row">
+      				<div class="col-md-3">
+			    		<h4>新窗口的url：</h4>
+      				</div>
+      				<div class="col-md-6">
+			    		<input type="text" name="$group.url.key" value="$!group.url.value" class="form-control"/>
+      				</div>
+      				<div class="col-md-3">
+					   	#if (!$group.url.valid)
+			        		<label class="label label-danger bolder">$group.url.message</label>
+    					#end
+      				</div>
+      			</div>
+      	</div>
+    </div>
+    
+	<div class="row blank-space">
+    	<div class="col-md-1">
+      	</div>
+    	<div class="col-md-11">
+      			<div class="row">
+      				<div class="col-md-3">
+			    		<h4>请选择新窗口方式：</h4>
+      				</div>
+      				<div class="col-md-6">
+      					#select ($group.type.key $selectWindowType $group.type.value "-- 请选择窗口风格 --")
+      				</div>
+      				<div class="col-md-3">
+					   	#if (!$group.type.valid)
+			        		<label class="label label-danger bolder">$group.type.message</label>
+    					#end
+      				</div>
+      			</div>
+     	</div>
+    </div>    
+    
+    <fieldset style="margin:30px 10px">
+   		<legend style="margin:10px 100px">窗口属性：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.features.key" value="top"/>
+						<span> 窗口顶部离开屏幕顶部的像素数 </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.features.key" value="left"/>
+						<span> 窗口左端离开屏幕左端的像素数 </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.features.key" value="width"/>
+						<span> 窗口宽度 </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.features.key" value="height"/>
+						<span> 窗口高度 </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.features.key" value="menubar"/>
+						<span> 是否有菜单 </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.features.key" value="toolbar"/>
+						<span> 是否有工具栏 </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.features.key" value="scrollbars"/>
+						<span> 是否有滚动条 </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.features.key" value="status"/>
+						<span> 是否有状态栏 </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+    </fieldset>
+    $jsContent.getURI("images/newWindow.png")
+    <img class="blank-space" src="$jsContent.getURI("images/newWindow.png")" alt="标签表达式" >
+    
+		
+	<div class="row">
+      <div class="col-md-3">
+      </div>
+	  <div class="col-md-2">
+	  	<input type="submit" name="event_submit_do_create" class="btn btn-primary btn-lg"/>
+      </div>
+      <div class="col-md-2">
+	    <input type="button" name="reset" value="清空" class="btn btn-primary btn-lg "/>
+      </div>
+	</div>
+</form>
+
+<pre>
+	<code>
+		$newWindowResult
+	</code>
+</pre>
+

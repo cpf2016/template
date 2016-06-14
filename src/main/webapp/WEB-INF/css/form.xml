@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:services="http://www.alibaba.com/schema/services"
+	xmlns:fm-validators="http://www.alibaba.com/schema/services/form/validators"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="
+                 http://www.alibaba.com/schema/services                 http://localhost:8080/schema/services.xsd
+                 http://www.alibaba.com/schema/services/form/validators http://localhost:8080/schema/services-form-validators.xsd
+                 http://www.springframework.org/schema/beans            http://localhost:8080/schema/www.springframework.org/schema/beans/spring-beans.xsd
+             ">
+
+	<services:form postOnlyByDefault="true">
+		<!--
+			- ===============================================
+			- 用来检查csrf token。
+			- ===============================================
+		-->
+		<group name="csrfCheck">
+			<field name="csrfToken">
+				<fm-validators:csrf-validator>
+					<message>提交的数据已过期</message>
+				</fm-validators:csrf-validator>
+			</field>
+		</group>
+		<!--
+			- ===============================================
+			- create ibatis form
+			- ===============================================
+		-->
+		<group name="createFontCss" extends="csrfCheck">
+			<field name="selector" displayName="选择器">
+				<fm-validators:required-validator>
+					<message>必须填写 ${displayName}</message>
+				</fm-validators:required-validator>
+			</field>
+			<field name="style" displayName="字体风格">
+			</field>
+			<field name="weight" displayName="字体粗细">
+			</field>
+			<field name="size" displayName="字体大小">
+			</field>
+			<field name="sizeUnit" displayName="字体大小单位">
+			</field>
+			<field name="family" displayName="字体">
+			</field>
+			<field name="textDecoration" displayName="字体装饰">
+			</field>
+			<field name="color" displayName="字体颜色">
+			</field>
+		</group>
+		
+		<group name="createTextCss" extends="csrfCheck">
+			<field name="selector" displayName="选择器">
+				<fm-validators:required-validator>
+					<message>必须填写 ${displayName}</message>
+				</fm-validators:required-validator>
+			</field>
+			<field name="lineHeight" displayName="行间距">
+			</field>
+			<field name="lineHeightUnit" displayName="行间距单位">
+			</field>
+			<field name="textIndent" displayName="缩进">
+			</field>
+			<field name="textIndentUnit" displayName="缩进单位">
+			</field>
+			<field name="textAlign" displayName="对齐方式">
+			</field>
+		</group>
+		
+	</services:form>
+
+</beans:beans>

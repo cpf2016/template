@@ -1,0 +1,237 @@
+package cm.alibaba.icbu.first.ibatis.dao;
+
+import java.io.Serializable;
+
+/**
+*用于分页查询，其中既有开始页与页大小，也有查询的参数
+*/
+public class PageQuery implements Serializable {
+
+    private static final long serialVersionUID = -7407181559044895966L;
+
+    // 排序字段及方式 如： "order asc"
+    private String orderStr;
+
+    // 当前页码
+    private int    start      = Constant.DEFAULT_START;
+
+    // 每页显示记录数
+    private int    pageSize = Constant.DEFAULT_PAGESIZE;
+
+    // 查询出的数据总数
+    private int    totalItem   = 0;
+
+    // 当前查询返回结果数
+    private int    returnCount = 0;
+    
+    // 查询的其他参数
+    private Object params;
+
+    
+    public PageQuery(Integer start, Integer pageSize, Object params) {
+    	this.start = start;
+    	this.pageSize = pageSize;
+    	this.params = params;
+	}
+    
+    public Object getParams() {
+		return params;
+	}
+
+	public void setParams(Object params) {
+		this.params = params;
+	}
+
+	/**
+     * 判断当前页是否为第一页
+     * 
+     * @return boolean
+     */
+    public boolean isFirstPage() {
+        return start == 1;
+    }
+
+    public String getOrderStr() {
+        return orderStr;
+    }
+
+    public void setOrderStr(String orderStr) {
+        this.orderStr = orderStr;
+    }
+
+    public int getToPage() {
+        // style 1 (简单分页)
+        if (this.totalItem == 0 && (this.returnCount > 0 || start > 1)) {
+            return start;
+        }
+        // style 2
+        if (start > getTotalPage()) {
+            return getTotalPage();
+        } else return start;
+    }
+
+    public void setToPage(int toPage) {
+        this.start = toPage;
+    }
+
+    public int getPerPageSize() {
+        return pageSize;
+    }
+
+    public void setPerPageSize(int perPageSize) {
+        this.pageSize = perPageSize;
+    }
+
+    public int getTotalItem() {
+        return totalItem;
+    }
+
+    public void setTotalItem(int totalItem) {
+        this.totalItem = totalItem;
+    }
+
+    /**
+     * 得到上一页的页数
+     * 
+     * @return int 如果当前页没有上一页，返回1
+     */
+    public int getPreviousPage() {
+        int back = start - 1;
+        if (back <= 0) {
+            back = 1;
+        }
+        return back;
+    }
+
+    /**
+     * 判断当前页是否为最后一页
+     * 
+     * @return boolean
+     */
+    public boolean isLastPage() {
+        return this.getTotalPage() == start;
+    }
+
+    /**
+     * 得到下一页的页数
+     * 
+     * @return int 如果当前也没有下一页，返回总页数
+     */
+    public int getNextPage() {
+        int back = start + 1;
+        if (back > this.getTotalPage()) {
+            back = this.getTotalPage();
+        }
+        return back;
+    }
+
+    /**
+     * 得到要显示的总页数
+     * 
+     * @return int
+     */
+    public int getTotalPage() {
+        if (totalItem == 0) {
+            return 0;
+        }
+        int result = totalItem / pageSize;
+        if (totalItem % pageSize != 0) {
+            result++;
+        }
+        return result;
+    }
+
+    /**
+     * 验证toPage页数是否合法
+     * 
+     * @param toPage
+     * @return 验证后的toPage页数
+     */
+    public int validateToPage(int toPage) {
+        int pageNum = toPage;
+        if (pageNum < 1) pageNum = 1;
+        if (pageNum > getTotalPage()) pageNum = getTotalPage();
+        return pageNum;
+    }
+
+    /**
+     * 构建PageInfo对象数据。 PageInfo的实现类专用，主要是验证当前页数的合法性
+     */
+    public void validatePageInfo() {
+        setToPage(validateToPage(start));
+    }
+
+    /**
+     * 得到要检索的结束行数
+     * 
+     * @return 如果<code>toPage</code>和<code>perPageSize</code>中任何一个小于等于0， 则返回<code>null</code>,用于在分页查询返回所有的数据（即不分页）。
+     */
+    public Integer getEndRow() {
+        if (start > 0 && pageSize > 0) {
+            return new Integer(start * pageSize);
+        }
+        return new Integer(10);
+    }
+
+    /**
+     * 得到要检索的起始行数
+     * 
+     * @return 如果<code>toPage</code>和<code>perPageSize</code>中任何一个小于等于0， 则返回<code>null</code>,用于在分页查询返回所有的数据（即不分页）。
+     */
+    public Integer getStartRow() {
+        if (start > 0 && pageSize > 0) {
+            return new Integer((start - 1) * pageSize);
+        }
+        return new Integer(0);
+    }
+
+    /**
+     * @param value
+     */
+    protected String getSQLBlurValue(String value) {
+        if (value == null) {
+            return null;
+        }
+        return value + '%';
+    }
+
+    protected String formatDate(String datestring) {
+        if (datestring == null || datestring.equals("")) {
+            return null;
+        } else {
+            return (datestring + " 00:00:00");
+        }
+    }
+
+    /**
+     * 时间查询时,结束时间的 23:59:59
+     */
+    protected String addDateEndPostfix(String datestring) {
+        if (datestring == null || datestring.equals("")) {
+            return null;
+        }
+        return datestring + " 23:59:59";
+    }
+
+    /**
+     * 时间查询时，开始时间的 00:00:00
+     */
+    protected String addDateStartPostfix(String datestring) {
+        if (datestring == null || datestring.equals("")) {
+            return null;
+        }
+        return datestring + " 00:00:00";
+    }
+
+    public int getDesiredPage() {
+        return this.start;
+    }
+
+    public int getReturnCount() {
+        return returnCount;
+    }
+
+    public void setReturnCount(int returnCount) {
+        this.returnCount = returnCount;
+    }
+}

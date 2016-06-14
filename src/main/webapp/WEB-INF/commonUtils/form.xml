@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:services="http://www.alibaba.com/schema/services"
+	xmlns:fm-validators="http://www.alibaba.com/schema/services/form/validators"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="
+                 http://www.alibaba.com/schema/services                 http://localhost:8080/schema/services.xsd
+                 http://www.alibaba.com/schema/services/form/validators http://localhost:8080/schema/services-form-validators.xsd
+                 http://www.springframework.org/schema/beans            http://localhost:8080/schema/www.springframework.org/schema/beans/spring-beans.xsd
+             ">
+
+	<services:form postOnlyByDefault="true">
+		<!--
+			- ===============================================
+			- 用来检查csrf token。
+			- ===============================================
+		-->
+		<group name="csrfCheck">
+			<field name="csrfToken">
+				<fm-validators:csrf-validator>
+					<message>提交的数据已过期</message>
+				</fm-validators:csrf-validator>
+			</field>
+		</group>
+		<!--
+			- ===============================================
+			- create ibatis form
+			- ===============================================
+		-->
+		<group name="createDigest" extends="csrfCheck">
+			<field name="type" displayName="配置方式">
+				<fm-validators:required-validator>
+					<message>必须填写 ${displayName}</message>
+				</fm-validators:required-validator>
+			</field>
+		</group>
+		
+		<group name="createJson" extends="csrfCheck">
+			<field name="type" displayName="方式">
+				<fm-validators:required-validator>
+					<message>必须填写 ${displayName}</message>
+				</fm-validators:required-validator>
+			</field>
+			<field name="className" displayName="类名称">
+				<fm-validators:required-validator>
+					<message>必须填写 ${displayName}</message>
+				</fm-validators:required-validator>
+			</field>
+		</group>
+		
+		<group name="createDate" extends="csrfCheck">
+			<field name="type" displayName="方式">
+				<fm-validators:required-validator>
+					<message>必须填写 ${displayName}</message>
+				</fm-validators:required-validator>
+			</field>
+			<field name="methods" displayName="方法名称">
+			</field>
+			<field name="dateUnit" displayName="时间单位">
+			</field>
+			<field name="operateType" displayName="操作方式">
+			</field>
+			<field name="number" displayName="加减数量">
+			</field>
+			<field name="dateBetween" displayName="计算两个日期之间差的单位">
+			</field>
+			<field name="dateCompare" displayName="计算两个日期之间差的单位">
+			</field>
+			<field name="createType" displayName="创建DateTime实例的方式">
+			</field>
+		</group>
+		
+	</services:form>
+
+</beans:beans>

@@ -1,0 +1,287 @@
+#if($type=="joda")
+import org.joda.time.DateTime;
+#elseif($type=="jdk")
+xx
+#end
+public final class DateUtils{
+	#if($createType && $createType=="Date" && $type=="joda")
+	public static DateTime createDateTime(Date date){
+		return new DateTime(date);
+	}
+	#elseif($createType && $createType=="Number" && $type=="joda")
+	public static DateTime createDateTime(int year, int monthOfYear, int dayOfMonth, int hourOfDay, int minuteOfHour, int secondOfMinute, int millisOfSecond){
+		return new DateTime(year, monthOfYear, dayOfMonth, hourOfDay, minuteOfHour, secondOfMinute, millisOfSecond);
+	}
+	#elseif($createType && $createType=="Default" && $type=="joda")
+	public static DateTime createDateTime(){
+		return new DateTime();
+	}
+	#end
+	
+	#if($setTimeZone && $type=="joda")
+	/**
+	 * give a timezone paramter like 'Asia/Tokyo' or '+09'
+	 */
+	public static void setTimeZone(String timeZoneId){
+		DateTimeZone.setDefault(DateTimeZone.forID(timeZoneId));
+	}
+	#end
+	
+	#if($getYear && $type=="joda")
+	public static Integer getYear(insert param here){
+		DateTime dateTime = create DateTime instance
+		return dateTime.getYear();
+	}
+	#end
+	
+	#if($getYearOfCentury && $type=="joda")
+	public static Integer getYearOfCentury(insert param here){
+		DateTime dateTime = create DateTime instance
+		return dateTime.getYearOfCentury();
+	}
+	#end
+	
+	#if($getMonth && $type=="joda")
+	public static Integer getMonth(insert param here){
+		DateTime dateTime = create DateTime instance
+		return dateTime.getMonthOfYear();
+	}
+	#end
+	
+	#if($getDay && $type=="joda")
+	public static Integer getDay(insert param here){
+		DateTime dateTime = create DateTime instance
+		return dateTime.getDayOfMonth();
+	}
+	#end
+	
+	
+	#if($getDayOfWeek && $type=="joda")
+	public static Integer getDayOfWeek(insert param here){
+		DateTime dateTime = create DateTime instance
+		return dateTime.getDayOfWeek();
+	}
+	#end
+	
+	#if($getDayOfYear && $type=="joda")
+	public static Integer getDayOfYear(insert param here){
+		DateTime dateTime = create DateTime instance
+		return dateTime.getDayOfYear();
+	}
+	#end
+	
+	#if($getHour && $type=="joda")
+	public static Integer getHour(insert param here){
+		DateTime dateTime = create DateTime instance
+		return dateTime.getHour();
+	}
+	#end
+	
+	#if($getMinute && $type=="joda")
+	public static Integer getMinute(insert param here){
+		DateTime dateTime = create DateTime instance
+		return dateTime.getMinute();
+	}
+	#end
+	
+	#if($getMinuteOfDay && $type=="joda")
+	public static Integer getMinuteOfDay(insert param here){
+		DateTime dateTime = create DateTime instance
+		return dateTime.getMinuteOfDay();
+	}
+	#end
+	
+	#if($getSecond && $type=="joda")
+	public static Integer getSecond(insert param here){
+		DateTime dateTime = create DateTime instance
+		return dateTime.getSecond();
+	}
+	#end
+	
+	#if($getSecondOfDay && $type=="joda")
+	public static Integer getSecondOfDay(insert param here){
+		DateTime dateTime = create DateTime instance
+		return dateTime.getSecondOfDay();
+	}
+	#end
+	
+	#if($getMillis && $type=="joda")
+	public static Integer getMillis(insert param here){
+		DateTime dateTime = create DateTime instance
+		return dateTime.getMillis();
+	}
+	#end
+	
+	#if($jodaToDate && $type=="joda")
+	public static Date jodaToDate(DateTime dateTime){
+		return dateTime.toDate();
+	}
+	#end
+	
+	#if($dateToJoda && $type=="joda")
+	public static Date dateToJoda(Date date){
+		return new DateTime(date);
+	}
+	#end
+
+	#if($jodaToCalendar && $type=="joda")
+	public static Calendar jodaToCalendar(DateTime dateTime){
+		return dateTime.toCalendar(Locale.getDefault());
+	}
+	#end
+	
+	#if($dateUnit && $operateType && $number && $type=="joda")
+	public static DateTime getYear(insert param here){
+		DateTime dateTime = create DateTime instance
+		return dateTime.${operateType}${dateUnit}($number);
+	}
+	#end
+	
+	#if($getYearBeginTime && $type=="joda")
+	public static DateTime getYearBeginTime(insert param here) {
+		DateTime dateTime = create DateTime instance
+		
+		DateTime dateBegin = dateTime.dayOfYear().withMinimumValue();
+		DateTime timeBegin = dateBegin.millisOfDay().withMinimumValue();
+		
+		return timeBegin;
+	}
+	#end
+	
+	#if($getYearEndTime && $type=="joda")
+	public static DateTime getYearEndTime(insert param here) {
+		DateTime dateTime = create DateTime instance
+		
+		DateTime dateEnd = dateTime.dayOfYear().withMaximumValue();
+		DateTime timeEnd = dateEnd.millisOfDay().withMaximumValue();
+		
+		return timeEnd;
+	}
+	#end
+	
+	#if($getMonthBeginTime && $type=="joda")
+	public static DateTime getMonthBeginTime(insert param here) {
+		DateTime dateTime = create DateTime instance
+		
+		DateTime dateBegin = dateTime.dayOfMonth().withMinimumValue();
+		DateTime timeBegin = dateBegin.millisOfDay().withMinimumValue();
+		
+		return timeBegin;
+	}
+	#end
+	
+	#if($getMonthEndTime && $type=="joda")
+	public static DateTime getMonthEndTime(insert param here) {
+		DateTime dateTime = create DateTime instance
+		
+		DateTime dateEnd = dateTime.dayOfMonth().withMaximumValue();
+		DateTime timeEnd = dateEnd.millisOfDay().withMaximumValue();
+		
+		return timeEnd;
+	}
+	#end
+	
+	#if($getDayBeginTime && $type=="joda")
+	public static DateTime getDayBeginTime(insert param here) {
+		DateTime dateTime = create DateTime instance
+		
+		return dateTime.millisOfDay().withMinimumValue();
+	}
+	#end
+	
+	#if($getDayEndTime && $type=="joda")
+	public static DateTime getDayEndTime(insert param here) {
+		DateTime dateTime = create DateTime instance
+		
+		return dateTime.millisOfDay().withMaximumValue();
+	}
+	#end
+	
+	#if($getHourBeginTime && $type=="joda")
+	public static DateTime getHourBeginTime(insert param here) {
+		DateTime dateTime = create DateTime instance
+		
+		return dateTime.minuteOfHour().withMinimumValue()
+				.secondOfMinute().withMinimumValue()
+				.millisOfSecond().withMinimumValue();
+	}
+	#end
+	
+	#if($getHourEndTime && $type=="joda")
+	public static DateTime getDayEndTime(insert param here) {
+		DateTime dateTime = create DateTime instance
+		
+		return dateTime.minuteOfHour().withMaximumValue()
+				.secondOfMinute().withMaximumValue()
+				.millisOfSecond().withMaximumValue();
+	}
+	#end
+	
+	#if($getMinuteBeginTime && $type=="joda")
+	public static DateTime getMinuteBeginTime(insert param here) {
+		DateTime dateTime = create DateTime instance
+		
+		return dateTime.minuteOfHour().withMinimumValue();
+	}
+	#end
+	
+	#if($getMinuteEndTime && $type=="joda")
+	public static DateTime getMinuteEndTime(insert param here) {
+		DateTime dateTime = create DateTime instance
+		
+		return dateTime.minuteOfHour().withMaximumValue();
+	}
+	#end
+	
+	#if($getSecondBeginTime && $type=="joda")
+	public static DateTime getSecondBeginTime(insert param here) {
+		DateTime dateTime = create DateTime instance
+		
+		return dateTime.millisOfSecond().withMinimumValue();
+	}
+	#end
+	
+	#if($getSecondEndTime && $type=="joda")
+	public static DateTime getSecondEndTime(insert param here) {
+		DateTime dateTime = create DateTime instance
+		
+		return dateTime.millisOfSecond().withMaximumValue();
+	}
+	#end
+	
+	#if($dateBetween && $dateBetween!="Millis" && $type=="joda")
+	public static int get${dateBetween}Between(insert param here) {
+		DateTime d1 = create DateTime instance
+		DateTime d2 = create DateTime instance
+		
+		return ${dateBetween}.${methodPrefix}Between(d1, d2).get${dateBetween}();
+	}
+	#elseif($dateBetween && $dateBetween=="Millis" && $type=="joda")
+	public static long getMillisBetween(Date d1, Date d2) {
+		return d2.getTime() - d1.getTime();
+	}
+	#end
+	
+	#if($dateCompare && $type=="joda")
+	public static DateTime is${dateCompare}(insert param here) {
+		DateTime d1 = create DateTime instance
+		DateTime d2 = create DateTime instance
+		
+		return d1.is${dateCompare}(d2);
+	}
+	#end
+	
+	#if($dateTimeToString && $type=="joda")
+	public static String dateTimeToString(DateTime dateTime, String pattern) {
+		return dateTime.toString(pattern);
+	}
+	#end
+	
+	#if($stringToDateTime && $type=="joda")
+	public static DateTime stringToDateTime(String time, String pattern) {
+		DateTimeFormatter format = DateTimeFormat.forPattern(pattern);
+		return DateTime.parse(time, format).toDateTime();
+	}
+	#end
+}
+

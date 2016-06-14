@@ -1,0 +1,26 @@
+	<!-- define a business bean -->
+	<bean id="$instanceName" class="package ------------name" />
+
+	<!-- define a advice bean -->
+	<bean id="${instanceName}Advice" class="package ------------name.${className}Advice" />
+#if($type=="tag")
+
+	<aop:config>
+		<aop:aspect id="businessAspect" ref="${instanceName}Advice">
+			<!-- config which beans will be cut -->
+			<aop:pointcut id="point_cut" expression="execution(* aop.*.*(..))" />
+			<!-- eg:
+				<aop:pointcut id="except_cut" expression="execution(* spring.*.*(..))" />
+			-->
+
+			<aop:before method="doBefore" pointcut-ref="point_cut" />
+			<aop:after-returning method="doAfter" pointcut-ref="point_cut"  returning="result" />
+			<aop:around method="doAround" pointcut-ref="point_cut" /> 
+			<aop:after-throwing method="doThrow" pointcut-ref="point_cut" throwing="e" />
+		</aop:aspect>
+	</aop:config>
+#end
+
+#if($type=="annotation")
+	<aop:aspectj-autoproxy />
+#end

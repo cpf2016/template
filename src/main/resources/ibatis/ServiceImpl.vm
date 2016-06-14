@@ -1,0 +1,26 @@
+
+public class ${typeName}ServiceImpl implements ${typeName}Service {
+	@Autowired
+    private ${daoName} ${daobeanName};
+    
+	#if($insertBatch)
+	public Long insertBatch(List<${pojoName}> list) {
+        int size = list.size();
+        int batchSize = ConstantValues.BATCH_SIZE;
+
+        if (size <= batchSize) {
+            ${daobeanName}.insertBatch(list);
+        } else {
+            List<${pojoName}> subList = null;
+
+            int num = size / batchSize;
+            for (int i = 0; i < num; i++) {
+                subList = list.subList(i * batchSize, (i + 1) * batchSize - 1);
+                ${daobeanName}.insertBatch(subList);
+            }
+            subList = list.subList(num * batchSize, list.size());
+            ${daobeanName}.insertBatch(subList);
+        }
+    }
+    #end
+}

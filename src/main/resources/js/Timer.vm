@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+</head>
+<script>
+	var timerId;
+#if($type=="interval")
+	function start(){
+		timerId = setInterval(operate,${interval});
+	}
+	
+	function stop(){
+		clearInterval(timerId);
+	}
+	
+	function operate(){
+		// insert code here
+		// they will be execute
+	}
+#elseif($type=="one")
+	function start(){
+		timerId = setTimeout(operate,${interval});
+	}
+	
+	function operate(){
+		// insert code here
+		// they will be execute
+	}
+#elseif($type=="one_always")
+	function start(){
+		timerId = setTimeout(operate,${interval});
+	}
+	
+	function stop(){
+		clearTimeout(timerId);
+	}
+	function operate(){
+		// insert code here
+		// they will be execute
+		timerId = setTimeout(operate,${interval});
+	}
+#end
+</script>
+<body>
+  <form>
+    <input type="button" value="Start" onclick="start()" />
+    <input type="button" value="Stop"  onclick="stop()" />
+  </form>
+</body>
+</html>

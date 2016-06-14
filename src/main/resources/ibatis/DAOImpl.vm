@@ -1,0 +1,79 @@
+
+public class ${typeName}DAOImpl extends BaseDAOImpl<${pojoName}> implements ${typeName}DAO {
+
+	#if($insert)
+    public Long insert${typeName}(${pojoName} ${instanceName}) {
+        Long id = super.allocateId();
+        ${instanceName}.setId(id);
+        getSqlMapClientTemplate().insert("${namespace}.insert${typeName}", ${instanceName});
+        return id;
+    }
+    #end
+
+	#if($insertBatch)
+	public Long insertBatch(List<${pojoName}> list) {
+        for (${pojoName} ${instanceName} : list) {
+            ${instanceName}.setId(super.allocateId());
+        }
+        return executeInsertBatch("${namespace}.insert${typeName}", list);
+    }
+    #end
+
+
+
+	#if($delete)
+	public Integer delete${typeName}(Long id){
+		return getSqlMapClientTemplate().delete("${namespace}.delete${typeName}", id);
+	}
+	#end
+
+
+	#if($deleteBatch)
+	public Integer deleteBatch(List<${pojoName}> list){
+		return executeDeleteBatch("${namespace}.deleteBatch", list);
+	}
+	#end
+	
+	#if($update)
+    public Integer update${typeName}(${pojoName} ${instanceName}) {
+        return getSqlMapClientTemplate().update("${namespace}.update${typeName}", ${instanceName});
+    }
+	#end
+	
+	#if($findById)	
+	public ${pojoName} find${typeName}ById(Long id){
+		return (${pojoName}) getSqlMapClientTemplate().queryForObject("${namespace}.find${typeName}ById", id); 
+	}
+	#end
+
+
+	#if($list)
+	public List<${pojoName}> list${typeName}(${pojoName} ${instanceName}){
+		return getSqlMapClientTemplate().queryForList("${namespace}.list${typeName}", ${instanceName});
+	}
+	#end
+	
+	#if($listWithLimit)
+	public List<${pojoName}> list${typeName}WithLimit(${pojoName} ${instanceName}){
+		list${typeName}WithLimit(${instanceName}, Constant.DEFAULT_START, Constant.DEFAULT_PAGESIZE);
+	}
+	
+	public List<${pojoName}> list${typeName}WithLimit(${pojoName} ${instanceName}, Integer start, Integer pageSize){
+		PageQuery query = new PageQuery(start, pageSize, ${instanceName});
+		executeQueryForList("${namespace}.list${typeName}WithLimit", 
+							"${namespace}.count${typeName}", 
+							query);
+	}
+	#end
+	
+    @SuppressWarnings("unchecked")
+    public List<TaskDO> listTask(TaskDO taskDO) {
+        return (List<TaskDO>) getSqlMapClientTemplate().queryForList("MSG_CENTER_TASK.listTask", taskDO);
+    }
+
+    public Integer findFailedTaskNumber(RuleDO rule) {
+        return (Integer) getSqlMapClientTemplate().queryForObject("MSG_CENTER_TASK.findFailedTaskNumber", rule);
+    }
+
+	
+}

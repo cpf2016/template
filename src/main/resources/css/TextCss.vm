@@ -1,0 +1,11 @@
+$selector{
+#if($lineHeight)
+	font-lineHeight : $lineHeight$lineHeightUnit;
+#end
+#if($textIndent)
+	text-indent : $textIndent$textIndentUnit;
+#end
+#if($textAlign && $textAlign!="default")
+	text-align : $textAlign;
+#end
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:services="http://www.alibaba.com/schema/services"
+	xmlns:fm-validators="http://www.alibaba.com/schema/services/form/validators"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="
+                 http://www.alibaba.com/schema/services                 http://localhost:8080/schema/services.xsd
+                 http://www.alibaba.com/schema/services/form/validators http://localhost:8080/schema/services-form-validators.xsd
+                 http://www.springframework.org/schema/beans            http://localhost:8080/schema/www.springframework.org/schema/beans/spring-beans.xsd
+             ">
+
+	<services:form postOnlyByDefault="true">
+		<!--
+			- ===============================================
+			- 用来检查csrf token。
+			- ===============================================
+		-->
+		<group name="csrfCheck">
+			<field name="csrfToken">
+				<fm-validators:csrf-validator>
+					<message>提交的数据已过期</message>
+				</fm-validators:csrf-validator>
+			</field>
+		</group>
+		
+		<group name="createInnerObject" extends="csrfCheck">
+			<field name="arrayMethods" displayName="数组方法">
+			</field>	
+			<field name="dateMethods" displayName="日期方法">
+			</field>	
+			<field name="stringMethods" displayName="字符串方法">
+			</field>	
+		</group>
+		
+		<group name="createDialog" extends="csrfCheck">
+			<field name="dialogMethods" displayName="对话框方法">
+			</field>	
+		</group>
+		<group name="createNewWindow" extends="csrfCheck">
+			<field name="type" displayName="新窗口方式">
+			</field>	
+			<field name="url" displayName="新窗口url">
+				<fm-validators:required-validator>
+					<message>必须填写 ${displayName}</message>
+				</fm-validators:required-validator>
+			</field>	
+			<field name="features" displayName="新窗口特征">
+			</field>	
+		</group>
+		
+		<group name="createTimer" extends="csrfCheck">
+			<field name="interval" displayName="执行间隔（或多久后执行）">
+				<fm-validators:required-validator>
+					<message>必须填写 ${displayName}</message>
+				</fm-validators:required-validator>
+			</field>	
+			<field name="type" displayName="定时器类型">
+			</field>	
+		</group>
+		
+		
+	</services:form>
+
+</beans:beans>

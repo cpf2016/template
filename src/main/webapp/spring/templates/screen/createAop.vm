@@ -1,0 +1,95 @@
+$page.setTitle("创建AOP配置")
+
+<form action="" method="post">
+    $csrfToken.hiddenField
+    <input type="hidden" name="action" value="create_aop_action"/>
+
+	#set ($group = $form.createAop.defaultInstance)
+
+    <div class="row blank-space">
+    	<div class="col-md-1">
+      	</div>
+    	<div class="col-md-11">
+      			<div class="row">
+      				<div class="col-md-3">
+			    		<h4>请输入业务类名称：</h4>
+      				</div>
+      				<div class="col-md-6">
+      					<input type="text" name="$group.name.key" value="$!group.name.value" class="form-control"/>
+      				</div>
+      				<div class="col-md-3">
+					   	#if (!$group.name.valid)
+			        		<label class="label label-danger bolder">$group.name.message</label>
+    					#end
+      				</div>
+      			</div>
+     	</div>
+    </div>
+
+    
+    <div class="row blank-space">
+    	<div class="col-md-1">
+      	</div>
+    	<div class="col-md-11">
+      			<div class="row">
+      				<div class="col-md-3">
+			    		<h4>请选择AOP配置方式：</h4>
+      				</div>
+      				<div class="col-md-6">
+      					#select ($group.type.key $selectAopType $group.type.value "-- 请选择字体风格 --")
+      				</div>
+      				<div class="col-md-3">
+					   	#if (!$group.type.valid)
+			        		<label class="label label-danger bolder">$group.type.message</label>
+    					#end
+      				</div>
+      			</div>
+     	</div>
+    </div>
+    
+	<div class="row blank-space">
+      <div class="col-md-3">
+      </div>
+	  <div class="col-md-2">
+	  	<input type="submit" name="event_submit_do_create" class="btn btn-primary btn-lg"/>
+      </div>
+      <div class="col-md-2">
+	    <input type="button" name="reset" value="清空" class="btn btn-primary btn-lg "/>
+      </div>
+	</div>
+</form>
+
+<img class="blank-space" src="images/express.jpg" alt="标签表达式" >
+
+<h2>1.配置文件</h2>
+
+<pre>
+	<code>
+		$configResult
+	</code>
+</pre>
+<h3>注意：必须添加AOP命名空间</h3>
+<form role="form">
+  <div class="form-group">
+    <textarea class="form-control" rows="3" readonly style="height:200px">
+    <?xml version="1.0" encoding="UTF-8"?>
+	<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="     
+          http://www.springframework.org/schema/beans     
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd     
+          http://www.springframework.org/schema/aop     
+          http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+    </textarea>
+  </div>
+</form>
+
+
+<h2>2.切面类</h2>
+<pre>
+	<code>
+		$adviceResult
+	</code>
+</pre>
+

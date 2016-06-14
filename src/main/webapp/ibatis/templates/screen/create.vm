@@ -1,0 +1,121 @@
+$page.setTitle("Register")
+
+<form id="createIbatis" action="" method="post">
+    $csrfToken.hiddenField
+    <input type="hidden" name="action" value="create_mapper_action"/>
+
+	<p>
+	#set ($group = $form.createIbatis.defaultInstance)
+    <div class="col-xs-6 col-sm-11">
+	    <h3>1.请输入建表DDL：</h3>
+    </div>
+    
+    <div class="form-group has-error">
+      <div class="col-sm-1">
+      </div>
+      <div class="col-sm-6">
+    	<input  id="inputError" type="text" name="$group.ddl.key" value="$!group.ddl.value" class="form-control col-xs-6 col-sm-6"/>
+      </div>
+      <label class="col-sm-5 control-label" for="inputError">
+		   	#if (!$group.ddl.valid)
+        		$group.ddl.message
+    		#end
+      </label>
+   </div>
+   </p>
+        
+    <div class="col-xs-12 col-sm-12">
+	    <h3>2.请选择需要的功能：</h3>
+    </div>
+    	<div class="row">
+    		<div class="col-xs-12 col-sm-1">
+      		</div>
+			<div class="col-xs-12 col-sm-11">
+				<div class="control-group">
+					<label class="label label-success bolder">$group.insertMethods.displayName：</label>
+						<div class="checkbox">
+							<label class="col-xs-2">
+								<input type="checkbox" name="$group.insertMethods.key" value="insert"/>
+								<span> insert </span>
+							</label>
+							<label class="col-xs-2">
+								<input type="checkbox" name="$group.insertMethods.key" value="insertBatch"/>
+								<span> insertBatch</span>
+							</label>
+						</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="row">
+			<div class="col-xs-12 col-sm-1">
+      		</div>
+			<div class="col-xs-12 col-sm-11">
+				<div class="control-group">
+					<label class="label label-danger bolder">$group.deleteMethods.displayName：</label>
+						<div class="checkbox">
+							<label class="col-xs-2">
+								<input type="checkbox" name="$group.deleteMethods.key" value="delete"/>
+								<span> delete </span>
+							</label>
+							<label class="col-xs-2">
+								<input type="checkbox" name="$group.deleteMethods.key" value="deleteBatch"/>
+								<span> deleteBatch</span>
+							</label>
+						</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-12 col-sm-1">
+      		</div>
+			<div class="col-xs-12 col-sm-11">
+				<div class="control-group">
+					<label class="label label-warning bolder">$group.updateMethods.displayName：</label>
+						<div class="checkbox">
+							<label class="col-xs-2">
+								<input type="checkbox" name="$group.updateMethods.key" value="update"/>
+								<span> update </span>
+							</label>
+						</div>
+				</div>
+			</div>
+		</div>
+		
+    	
+    	<div class="row">
+    		<div class="col-xs-12 col-sm-1">
+      		</div>
+			<div class="col-xs-12 col-sm-11">
+				<div class="control-group">
+					<label class="label label-info bolder">$group.queryMethods.displayName：</label>
+						<div class="checkbox">
+							<label class="col-xs-2">
+								<input type="checkbox" name="$group.queryMethods.key" value="findById"/>
+								<span> findById </span>
+							</label>
+							<label class="col-xs-2">
+								<input type="checkbox" name="$group.queryMethods.key" value="list"/>
+								<span> list</span>
+							</label>
+							<label class="col-xs-2">
+								<input type="checkbox" name="$group.queryMethods.key" value="listWithLimit"/>
+								<span> listWithLimit</span>
+							</label>
+						</div>
+				</div>
+			</div>
+		</div>
+
+    <div class="form-group has-error">
+      <div class="col-sm-2">
+      </div>
+      <label class="col-sm-5">
+	    <input type="submit" name="event_submit_do_create" class="btn btn-primary btn-lg"/>
+	    <input type="button" name="reset" value="清空" class="btn btn-primary btn-lg " id="reset"/>
+      </label>
+   </div>
+</form>
+

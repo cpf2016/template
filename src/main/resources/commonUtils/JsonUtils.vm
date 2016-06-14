@@ -1,0 +1,61 @@
+#if($type=="toJson")
+import com.alibaba.fastjson.JSON;
+
+public String toJson(${className} ${instanceName}){
+	return JSON.toJSONString(${instanceName});
+}
+#end
+
+#if($type=="fromJson")
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+
+public ${className} fromJson(String json){
+	return JSON.parseObject(json,new TypeReference<${className}>(){});
+}
+#end
+
+#if($type=="pojoToMap")
+import org.apache.commons.beanutils.PropertyUtils;
+
+	/**
+	 * must add dependency:
+	 * <dependency>
+	 *	<groupId>commons-beanutils</groupId>
+	 *  <artifactId>commons-beanutils</artifactId>
+	 *  <version>1.9.2</version>
+	 * </dependency>
+	 * 
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 * @throws NoSuchMethodException
+	 */
+	public Map<String, Object> toMap(${className} ${instanceName}) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		return PropertyUtils.describe(${instanceName});
+	}
+#end
+
+#if($type=="mapToPojo")
+import org.apache.commons.beanutils.BeanUtils;
+
+	/**
+	 * must add dependency:
+	 * <dependency>
+	 *	<groupId>commons-beanutils</groupId>
+	 *  <artifactId>commons-beanutils</artifactId>
+	 *  <version>1.9.2</version>
+	 * </dependency>
+	 * 
+	 * @param map
+	 * @return
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	public ${className} toPojo(Map<String, Object> map) throws IllegalAccessException, InvocationTargetException {
+		${className} ${instanceName} = new ${className}();
+		BeanUtils.populate(${instanceName}, map);
+		
+		return ${instanceName};
+	}
+#end

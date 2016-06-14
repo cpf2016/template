@@ -1,0 +1,23 @@
+$selector{
+#if($style && $style!="default")
+	font-style : $style;
+#end
+#if($weight && $weight!="default")
+	font-weight : $weight;
+#end
+#if($size)
+	font-size : $size$sizeUnit;
+#end
+#if($lineHeight)
+	font-lineHeight : $lineHeight$lineHeightUnit;
+#end
+#if($family && $family!="default")
+	font-family : $family;
+#end
+#if($textDecoration && $textDecoration!="default")
+	text-decoration : $textDecoration;
+#end
+#if($color)
+	color : $color;
+#end
+}

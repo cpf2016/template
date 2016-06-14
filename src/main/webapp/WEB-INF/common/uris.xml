@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:services="http://www.alibaba.com/schema/services" xmlns:uris="http://www.alibaba.com/schema/services/uris"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="
+                 http://www.alibaba.com/schema/services      http://localhost:8080/schema/services.xsd
+                 http://www.alibaba.com/schema/services/uris http://localhost:8080/schema/services-uris.xsd
+                 http://www.springframework.org/schema/beans http://localhost:8080/schema/www.springframework.org/schema/beans/spring-beans.xsd
+             ">
+
+	<services:uris>
+		<!-- <uris:uri id="server" requestAware="true" />
+			
+			<uris:turbine-uri id="app1Link" exposed="true" extends="server">
+			<componentPath>/</componentPath>
+			</uris:turbine-uri>
+			
+			<uris:turbine-content-uri id="app1Content" exposed="true" extends="app1Link" /> -->
+
+		<uris:uri id="alibabaSite" exposed="true">
+            <serverURI>http://china.alibaba.com/</serverURI>
+        </uris:uri>
+        <uris:uri id="toolkitSite" exposed="true">
+            <serverURI>http://toolkit.alibaba-inc.com/</serverURI>
+        </uris:uri>
+
+		<uris:servlet-uri id="server" requestAware="true">
+			<servletPath>/</servletPath>
+		</uris:servlet-uri>
+		
+		<uris:turbine-uri id="ibatisModule" exposed="true" extends="server">
+			<componentPath>/</componentPath>
+		</uris:turbine-uri>
+		
+		<uris:turbine-uri id="springModule" exposed="true" extends="server">
+			<componentPath>/spring</componentPath>
+		</uris:turbine-uri>
+		
+		<uris:turbine-uri id="jsModule" exposed="true" extends="server">
+			<componentPath>/js</componentPath>
+		</uris:turbine-uri>
+		<uris:servlet-content-uri id="jsImageContent" exposed="true" extends="server">
+            <prefixPath>/ali_template/images</prefixPath>
+        </uris:servlet-content-uri>
+
+		<uris:turbine-uri id="ibatisResultLink" exposed="true" extends="ibatisModule">
+			<target>ibatisResult</target>
+		</uris:turbine-uri>
+
+		<uris:turbine-uri id="springIndexLink" exposed="true" extends="springModule">
+			<target>index</target>
+		</uris:turbine-uri>
+	</services:uris>
+
+</beans:beans>

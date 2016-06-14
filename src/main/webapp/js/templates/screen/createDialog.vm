@@ -1,0 +1,56 @@
+$page.setTitle("创建Window对象相关功能")
+
+<form action="" method="post">
+    $csrfToken.hiddenField
+    <input type="hidden" name="action" value="create_dialog_action"/>
+
+	#set ($group = $form.createDialog.defaultInstance)
+    
+       <fieldset style="margin:30px 10px">
+   		<legend style="color:red">对话框：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.dialogMethods.key" value="createAlert"/>
+						<span> 提示框：createAlert </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.dialogMethods.key" value="createConfirm"/>
+						<span> 确认框（返回值为true\false）：createConfirm </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.dialogMethods.key" value="createPrompt"/>
+						<span> 输入框（返回值为输入的值）：createPrompt </span>
+      				</label>
+      				<label class="col-sm-5">
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+    </fieldset>
+    
+		
+	<div class="row">
+      <div class="col-md-3">
+      </div>
+	  <div class="col-md-2">
+	  	<input type="submit" name="event_submit_do_create" class="btn btn-primary btn-lg"/>
+      </div>
+      <div class="col-md-2">
+	    <input type="button" name="reset" value="清空" class="btn btn-primary btn-lg "/>
+      </div>
+	</div>
+</form>
+
+<pre>
+	<code>
+		$dialogResult
+	</code>
+</pre>
+

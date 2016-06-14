@@ -1,0 +1,167 @@
+#if($createArray)
+function createArray(){
+	return new Array();
+	or return new Array("Saab","Volvo","BMW");
+	or return ["123","345"];
+}
+#end
+#if($getArrayLength)
+function getArrayLength(array){
+	return array.length;
+}
+#end
+#if($indexOf)
+function indexOf(array,element){
+	return array.indexOf(element);
+}
+#end
+#if($concat)
+function indexOf(array1,array2,array3){
+	return array1.concat(array2,array3);
+}
+#end
+#if($join)
+function join(array,separator){
+	return array.join(separator);
+}
+#end
+#if($subArray)
+function subArray(array,begin,end){
+	return array.slice(begin,end);
+}
+#end
+#if($reverse)
+function subArray(array){
+	return array.reverse();
+}
+#end
+
+
+#if($createDate)
+function createDate(){
+	return new Date();//current time
+	or return  new Date(2016,5,24,11,33,0);
+	or return new Date(date.getTime()); //milliseconds
+}
+#end
+#if($getTime)
+function getTime(){
+	return new Date().getTime(); //current time milliseconds
+}
+#end
+#if($getFullYear)
+function getFullYear(date){
+	return date.getFullYear(); //current time milliseconds
+}
+#end
+#if($setFullYear)
+function setFullYear(date,year){
+	return date.setFullYear(year); 
+}
+#end
+#if($getMonth)
+function getMonth(date){
+	return date.getMonth()+1; 
+}
+#end
+#if($setMonth)
+function setMonth(date,month){
+	return date.setMonth(month-1); 
+}
+#end
+#if($getDate)
+function getDate(date){
+	return date.getDate(); 
+}
+#end
+#if($setDate)
+function setDate(date,n){
+	return date.setDate(n); 
+}
+#end
+#if($getHours)
+function getHours(date){
+	return date.getHours(); 
+}
+#end
+#if($setHours)
+function setHours(date,hour){
+	return date.setHours(hour); 
+}
+#end
+#if($getMinutes)
+function getMinutes(date){
+	return date.getMinutes(); 
+}
+#end
+#if($setMinutes)
+function setMinutes(date,minutes){
+	return date.setMinutes(minutes); 
+}
+#end
+#if($getSeconds)
+function getSeconds(date){
+	return date.getSeconds(); 
+}
+#end
+#if($setSeconds)
+function setSeconds(date,seconds){
+	return date.setSeconds(seconds); 
+}
+#end
+#if($getDay)
+function getDay(date){
+	var weekday = new Array(7);
+	weekday[0] = "Sunday";
+	weekday[1] = "Monday";
+	weekday[2] = "Tuesday";
+	weekday[3] = "Wednesday";
+	weekday[4] = "Thursday";
+	weekday[5] = "Friday";
+	weekday[6] = "Saturday";
+
+	return = weekday[date.getDay()];
+}
+#end
+
+
+#if($charAt)
+function charAt(string,index){
+	return string[index]; 
+}
+#end
+#if($getLength)
+function getLength(string){
+	return string.length; 
+}
+#end
+#if($search)
+function search(src,dest){
+	return src.indexOf(dest); 
+}
+#end
+#if($replace)
+function replace(src,dest){
+	return src.replace(dest); 
+}
+#end
+#if($toUpperCase)
+function toUpperCase(src){
+	return src.toUpperCase(); 
+}
+#end
+#if($toLowerCase)
+function toLowerCase(src){
+	return src.toLowerCase(); 
+}
+#end
+#if($toArray)
+function toArray(src,separator){
+	return src.split(separator); 
+}
+#end
+#if($subString)
+function subString(src,begin,end){
+	return src.substring(begin,endd); 
+}
+#end

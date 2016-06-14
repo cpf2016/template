@@ -1,0 +1,69 @@
+#if($type && $type=="static")
+
+public class ${className}Proxy implements ${interfaceName} 
+{  
+    private ${interfaceName} realObject;  
+      
+    public ${className}Proxy()(${interfaceName} realObject){  
+        this.realObject = realObject;  
+    }  
+}
+#end
+
+
+#if($type && $type=="jdk")
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+
+public class ${className}Proxy implements InvocationHandler {
+	private Object obj;
+
+	public ${className}Proxy(Object obj) {
+		super();
+		this.obj = obj;
+	}
+
+	public void setObj(Object obj) {
+		this.obj = obj;
+	}
+
+	@Override
+	public Object invoke(Object proxy, Method method, Object[] args)
+			throws Throwable {
+		doBefore();
+		Object result = method.invoke(obj, args); 
+		doAfter();
+
+		return result;
+	}
+
+	private void doAfter() {
+		System.out.println("insert operate before.....");
+	}
+
+	private void doBefore() {
+		System.out.println("insert operate after.....");
+	}
+}
+#end
+#if($type && $type=="cglib")
+import java.lang.reflect.Method;
+
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
+
+public class ${className}Proxy implements MethodInterceptor {
+
+	@Override
+	public Object intercept(Object object, Method method, Object[] args,
+			MethodProxy proxy) throws Throwable {
+		//insert operate here 
+		
+		return proxy.invokeSuper(object, args);
+	}
+
+}
+#end
+
+
+

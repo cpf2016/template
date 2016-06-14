@@ -1,0 +1,15 @@
+#if($createAlert)
+function createAlert(){
+	alert("content");
+}
+#end
+#if($createConfirm)
+function createConfirm(){
+	var result = confirm("content");
+}
+#end
+#if($createPrompt)
+function createPrompt(){
+	var result = prompt("please insert value");
+}
+#end

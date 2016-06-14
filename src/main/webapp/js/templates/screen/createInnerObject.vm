@@ -1,0 +1,217 @@
+$page.setTitle("创建js内置对象")
+
+<form action="" method="post">
+    $csrfToken.hiddenField
+    <input type="hidden" name="action" value="create_innerObject_action"/>
+
+	#set ($group = $form.createInnerObject.defaultInstance)
+    
+       <fieldset style="margin:30px 10px">
+   		<legend style="color:red">数组Array对象：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.arrayMethods.key" value="createArray"/>
+						<span> 生成数组：createArray </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.arrayMethods.key" value="getArrayLength"/>
+						<span> 获取数组长度：getArrayLength </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.arrayMethods.key" value="indexOf"/>
+						<span> 获取指定元素在数组中位置：indexOf </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.arrayMethods.key" value="concat"/>
+						<span> 合并多个数组（至少2个数组）：concat </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.arrayMethods.key" value="join"/>
+						<span> 转换为由指定分隔符分隔的字符串：join </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.arrayMethods.key" value="subArray"/>
+						<span> 获取子数组（含头不含尾）：subArray </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.arrayMethods.key" value="reverse"/>
+						<span> 元素顺序反转：reverse </span>
+      				</label>
+      				<label class="col-sm-5">
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+    </fieldset>
+    
+    <fieldset style="margin:30px 10px">
+   		<legend style="color:red">日期Date对象：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.dateMethods.key" value="createDate"/>
+						<span> 生成Date实例：createDate </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.dateMethods.key" value="getTime"/>
+						<span> 获取至今毫秒数：getTime </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.dateMethods.key" value="getFullYear"/>
+						<span> 获取年：getFullYear </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.dateMethods.key" value="setFullYear"/>
+						<span> 设置年：setFullYear </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.dateMethods.key" value="getMonth"/>
+						<span> 获取月：getMonth </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.dateMethods.key" value="setMonth"/>
+						<span> 设置月：setMonth </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.dateMethods.key" value="getDate"/>
+						<span> 获取日：getDate </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.dateMethods.key" value="setDate"/>
+						<span> 设置日：setDate </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.dateMethods.key" value="getHours"/>
+						<span> 获取时：getHours </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.dateMethods.key" value="setHours"/>
+						<span> 设置时：setHours </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.dateMethods.key" value="getMinutes"/>
+						<span> 获取分：getMinutes </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.dateMethods.key" value="setMinutes"/>
+						<span> 设置时：setMinutes </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.dateMethods.key" value="getSeconds"/>
+						<span> 获取秒：getSeconds </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.dateMethods.key" value="setSeconds"/>
+						<span> 设置秒：setSeconds </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.dateMethods.key" value="getDay"/>
+						<span> 获取星期几：getDay </span>
+      				</label>
+      				<label class="col-sm-5">
+      				</label>
+      				
+      			</div>
+   			</fieldset>
+    	</div>
+    </fieldset>
+    
+    <fieldset style="margin:30px 10px">
+   		<legend style="color:red">字符串String对象：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.stringMethods.key" value="charAt"/>
+						<span> 获取指定下标字符：charAt </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.stringMethods.key" value="getLength"/>
+						<span> 获取string长度：getLength </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.stringMethods.key" value="search"/>
+						<span> 查找字符串：search </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.stringMethods.key" value="replace"/>
+						<span> 替换内容：replace </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.stringMethods.key" value="toUpperCase"/>
+						<span> 转换为大写：toUpperCase </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.stringMethods.key" value="toLowerCase"/>
+						<span> 转换为小写：toLowerCase </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.stringMethods.key" value="toArray"/>
+						<span> 转换为数组：toArray </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.stringMethods.key" value="subString"/>
+						<span> 获取子串：subString </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+    </fieldset>
+    
+		
+	<div class="row">
+      <div class="col-md-3">
+      </div>
+	  <div class="col-md-2">
+	  	<input type="submit" name="event_submit_do_create" class="btn btn-primary btn-lg"/>
+      </div>
+      <div class="col-md-2">
+	    <input type="button" name="reset" value="清空" class="btn btn-primary btn-lg "/>
+      </div>
+	</div>
+</form>
+
+<pre>
+	<code>
+		$innerObjectResult
+	</code>
+</pre>
+

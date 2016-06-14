@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+        <param name="target" value="System.out" />
+        <param name="encoding" value="UTF-8" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%-4r [%d{yyyy-MM-dd HH:mm:ss}] - %-5p %c %x - %m%n" />
+        </layout>
+    </appender>
+
+   <appender name="ali_template" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="ali-template.log" />
+        <param name="encoding" value="UTF-8" />
+        <param name="append" value="true" />
+        <param name="maxFileSize" value="300MB" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%d [%c]-[%p]-[%t] %m%n" />
+        </layout>
+    </appender>
+    
+    
+
+    <appender name="webx3" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="${alibaba_intl_ad_msgcenter_output}/ad-msgcenter-citrus-webx.log" />
+        <param name="encoding" value="UTF-8" />
+        <param name="append" value="true" />
+        <param name="maxFileSize" value="300MB" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="%-4r [%d{yyyy-MM-dd HH:mm:ss}] - %X{requestURIWithQueryString} [ip=%X{remoteAddr}, ref=%X{referrer}, ua=%X{userAgent}, sid=%X{cookie.JSESSIONID}]%n   %-5p %c %x - %m%n" />
+        </layout>
+    </appender>
+
+
+   <logger name="org.springframework">
+        <level value="WARN" />
+    </logger>
+    <logger name="org.apache">
+        <level value="WARN" />
+    </logger>
+    <logger name="com.alibaba.citrus" additivity="false">
+        <level value="WARN" />
+        <appender-ref ref="webx3" />
+    </logger>
+    <logger name="com.alibaba.cat">
+        <level value="WARN" />
+    </logger>
+    <logger name="com.alibaba.napoli">
+        <level value="WARN" />
+    </logger>
+    <logger name="com.alibaba.ark">
+        <level value="WARN" />
+    </logger>
+    <logger name="com.alibaba.intl.commons">
+        <level value="WARN" />
+    </logger>
+    <logger name="com.alibaba.service">
+        <level value="WARN" />
+    </logger>
+    <logger name="com.alibaba.comsat">
+        <level value="WARN" />
+    </logger>
+    <logger name="com.alibaba.warn">
+        <level value="WARN" />
+    </logger>
+	
+	<logger name="com.alibaba.webx.tutorial1" >
+        <level value="INFO" />
+        <appender-ref ref="ali_template" />
+    </logger>
+
+    <root>
+        <level value="INFO" />
+        <appender-ref ref="STDOUT" />
+    </root>
+</log4j:configuration>

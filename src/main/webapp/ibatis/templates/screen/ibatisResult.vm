@@ -1,0 +1,30 @@
+
+<div class="col-xs-6 col-sm-12">
+	    <h3>1.DAO接口內容：</h3>
+</div>
+<pre>
+	<code>
+		${DAOInterfaceContent}
+	</code>
+</pre> 
+
+<div class="col-xs-6 col-sm-12">
+	    <h3>2.DAO接口实现內容：</h3>
+</div>
+<pre>
+	<code>
+		${DAOImplContent}
+	</code>
+</pre> 
+
+	
+<div class="col-xs-6 col-sm-12">
+	 <h3>3.xml映射內容：</h3>
+</div>
+<pre>
+	<code>
+		${DAOXmlContent}
+	</code>
+</pre> 
+	
+

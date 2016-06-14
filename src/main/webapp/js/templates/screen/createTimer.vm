@@ -1,0 +1,63 @@
+$page.setTitle("创建js定时器")
+
+<form action="" method="post">
+    $csrfToken.hiddenField
+    <input type="hidden" name="action" value="create_timer_action"/>
+
+	#set ($group = $form.createTimer.defaultInstance)
+    <div class="row blank-space">
+    	<div class="col-md-1">
+      	</div>
+    	<div class="col-md-11">
+    		<div class="row">
+      				<div class="col-md-3">
+			    		<h4>执行间隔（或多久后执行），单位毫秒：</h4>
+      				</div>
+      				<div class="col-md-6">
+			    		<input type="text" name="$group.interval.key" value="$!group.interval.value" class="form-control"/>
+      				</div>
+      				<div class="col-md-3">
+					   	#if (!$group.interval.valid)
+			        		<label class="label label-danger bolder">$group.interval.message</label>
+    					#end
+      				</div>
+      			</div>
+      	</div>
+    </div>
+    
+	<div class="row blank-space">
+    	<div class="col-md-1">
+      	</div>
+    	<div class="col-md-11">
+      			<div class="row">
+      				<div class="col-md-3">
+			    		<h4>定时器类型：</h4>
+      				</div>
+      				<div class="col-md-6">
+      					#select ($group.type.key $selectTimerType $group.type.value "-- 请选择窗口风格 --")
+      				</div>
+      				<div class="col-md-3">
+      				</div>
+      			</div>
+     	</div>
+    </div>    
+    
+		
+	<div class="row">
+      <div class="col-md-3">
+      </div>
+	  <div class="col-md-2">
+	  	<input type="submit" name="event_submit_do_create" class="btn btn-primary btn-lg"/>
+      </div>
+      <div class="col-md-2">
+	    <input type="button" name="reset" value="清空" class="btn btn-primary btn-lg "/>
+      </div>
+	</div>
+</form>
+
+<pre>
+	<code>
+		$timerResult
+	</code>
+</pre>
+

@@ -1,0 +1,44 @@
+$page.setTitle("创建加密工具类")
+
+<form action="" method="post">
+    $csrfToken.hiddenField
+    <input type="hidden" name="action" value="create_digest_action"/>
+
+	#set ($group = $form.createDigest.defaultInstance)
+
+    
+    <div class="row blank-space">
+    	<div class="col-md-1">
+      	</div>
+    	<div class="col-md-11">
+      			<div class="row">
+      				<div class="col-md-3">
+			    		<h4>请选择加密方式：</h4>
+      				</div>
+      				<div class="col-md-6">
+      					#select ($group.type.key $selectDigestType $group.type.value "-- 请选择加密方式 --")
+      				</div>
+      			</div>
+     	</div>
+    </div>
+    
+	<div class="row blank-space">
+      <div class="col-md-3">
+      </div>
+	  <div class="col-md-2">
+	  	<input type="submit" name="event_submit_do_create" class="btn btn-primary btn-lg"/>
+      </div>
+      <div class="col-md-2">
+	    <input type="button" name="reset" value="清空" class="btn btn-primary btn-lg "/>
+      </div>
+	</div>
+</form>
+
+
+<pre>
+	<code>
+		$digestResult
+	</code>
+</pre>
+
+

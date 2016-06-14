@@ -1,0 +1,55 @@
+#if($type=="spring-md5")
+import org.springframework.util.DigestUtils;
+
+public static String getMd5(String target){
+	return DigestUtils.md5DigestAsHex(target.getBytes());
+}
+#end
+
+#if($type=="codec-md5")
+import org.apache.commons.codec.digest.DigestUtils;
+
+public static String getMd5(String target){
+	return DigestUtils.md2Hex(target);
+}
+#end
+
+#if($type=="codec-sha1")
+import org.apache.commons.codec.digest.DigestUtils;
+
+public static String getSha1(String target){
+	return DigestUtils.sha1Hex(target);
+}
+#end
+
+#if($type=="codec-base64")
+import org.apache.commons.codec.binary.Base64;
+
+	/**
+	 * encode the string
+	 * @param target
+	 * @return
+	 */
+	public static String getBase64Encode(String target){
+		byte[] b = Base64.encodeBase64(target.getBytes(), true);  
+        return new String(b);  
+	}
+	
+	/**
+	 * decode the string
+	 * @param target
+	 * @return
+	 */
+	public static String getBase64Decode(String target){
+		byte[] b = Base64.decodeBase64(target);
+		return new String(b);
+	}
+#end
+
+#if($type=="jdk-md5")
+import org.apache.commons.codec.digest.DigestUtils;
+
+public static String getSha1(String target){
+	return DigestUtils.sha1Hex(target);
+}
+#end

@@ -1,0 +1,89 @@
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+
+#if($type=="annotation")
+@Aspect
+#end
+public class ${className}Advice 
+{
+    /**
+     * before
+     * 
+     * @param jp
+     */
+    #if($type=="annotation")
+    @Before(value="execution(* packageName.*.*(..))")
+    #end
+    public void doBefore(JoinPoint jp) 
+    {
+        System.out.println("===========enter before advice============ \n");
+
+        System.out.print(" class is:" + jp.getTarget().getClass());
+        System.out.print(" method is:"+jp.getSignature().getName());
+        System.out.print(" method param is "+jp.getArgs());
+        
+        System.out.println();
+    }
+
+    /**
+     * after
+     * 
+     * @param jp
+     * @param result
+     * notice :"result" must be the same with "result" in xml
+     */
+    #if($type=="annotation")
+    @AfterReturning(value="execution(* packageName.*.*(..))" , returning = "result")
+    #end
+    public void doAfter(JoinPoint jp, String result) 
+    {
+        System.out.println("==========after advice=========== \n");
+
+        System.out.print(" class is:"+jp.getTarget().getClass());
+        System.out.print(" method is:"+jp.getSignature().getName());
+        System.out.print(" method param is:"+jp.getArgs());
+        System.out.print(" return value is:" + result);
+        
+        System.out.println();
+    }
+
+    /**
+     * 
+     * @param pjp
+     */
+    #if($type=="annotation")
+    @Around(value="execution(* packageName.*.*(..))")
+    #end
+    public void doAround(ProceedingJoinPoint pjp) throws Throwable 
+    {
+        System.out.println("===========enter around advice =========== \n");
+
+
+        // method param
+        Object[] args = pjp.getArgs();
+        // method name
+        String method = pjp.getSignature().getName();
+        // class
+        Object target = pjp.getTarget();
+        // invoke proceed() will execute bussiness method
+        Object result = pjp.proceed();
+
+        System.out.println("return value is:"  + result + "\n");
+    }
+
+    /**
+     * 
+     * @param jp
+     * @param e
+     * notice :"e" must be the same with "e" in xml
+     */
+    #if($type=="annotation")
+    @AfterThrowing(value="execution(* packageName.*.*(..))" , throwing = "e")
+    #end
+    public void doThrow(JoinPoint jp, Throwable e) 
+    {
+        System.out.println("exception is:"+e);
+    }
+
+}

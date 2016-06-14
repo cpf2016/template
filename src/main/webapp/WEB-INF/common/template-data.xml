@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:util="http://www.springframework.org/schema/util"
+             xmlns:p="http://www.springframework.org/schema/p"
+             xsi:schemaLocation="
+                http://www.springframework.org/schema/beans http://localhost:8080/schema/www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/util http://localhost:8080/schema/www.springframework.org/schema/util/spring-util.xsd
+             ">
+
+	<util:map id="selectStyle" map-class="java.util.LinkedHashMap">
+        <beans:entry key="default" value="默认" />
+        <beans:entry key="italic" value="斜体" />
+    </util:map>
+
+	<util:map id="selectAopType" map-class="java.util.LinkedHashMap">
+        <beans:entry key="tag" value="xml配置方式" />
+        <beans:entry key="annotation" value="注解" />
+    </util:map>
+    
+	<util:map id="selectWindowType" map-class="java.util.LinkedHashMap">
+        <beans:entry key="name" value="窗口名称（需要自己输入）" />
+        <beans:entry key="_blank" value="新打开窗口" />
+        <beans:entry key="_self" value="当前窗口" />
+        <beans:entry key="_top" value="上级窗口" />
+    </util:map>
+
+    <util:map id="selectDateType" map-class="java.util.LinkedHashMap">
+        <beans:entry key="joda" value="Joda实现" />
+        <beans:entry key="jdk" value="JDK实现" />
+    </util:map>
+    
+    <util:map id="selectDateOperateType" map-class="java.util.LinkedHashMap">
+        <beans:entry key="plus" value="加" />
+        <beans:entry key="minus" value="减" />
+    </util:map>
+    
+    <util:map id="selectDateUnitType" map-class="java.util.LinkedHashMap">
+        <beans:entry key="Years" value="年" />
+        <beans:entry key="Months" value="月" />
+        <beans:entry key="Days" value="日" />
+        <beans:entry key="Hours" value="时" />
+        <beans:entry key="Minutes" value="分钟" />
+        <beans:entry key="Seconds" value="秒" />
+        <beans:entry key="Millis" value="毫秒" />
+        <beans:entry key="Weeks" value="周" />
+    </util:map>
+    
+    <util:map id="selectCompareType" map-class="java.util.LinkedHashMap">
+        <beans:entry key="Before" value="之前" />
+        <beans:entry key="After" value="之后" />
+        <beans:entry key="Equal" value="相等" />
+    </util:map>
+    
+    <util:map id="selectTimerType" map-class="java.util.LinkedHashMap">
+        <beans:entry key="interval" value="每隔一段时间执行一次" />
+        <beans:entry key="one" value="一段时间后执行一次（只执行一次）" />
+        <beans:entry key="one_always" value="一段时间后无限执行" />
+    </util:map>
+    
+    <util:map id="selectCreateDateType" map-class="java.util.LinkedHashMap">
+        <beans:entry key="Date" value="java.util.Date" />
+        <beans:entry key="Number" value="各个日期字段的值" />
+        <beans:entry key="Default" value="无参，以当前时间构造" />
+    </util:map>
+    
+    <util:map id="selectProxyType" map-class="java.util.LinkedHashMap">
+        <beans:entry key="static" value="静态代理" />
+        <beans:entry key="jdk" value="JDK动态代理" />
+        <beans:entry key="cglib" value="CGLIB动态代理" />
+    </util:map>
+    
+    <util:map id="selectJsonType" map-class="java.util.LinkedHashMap">
+        <beans:entry key="toJson" value="序列化" />
+        <beans:entry key="fromJson" value="反序列化" />
+        <beans:entry key="pojoToMap" value="类转换为map" />
+        <beans:entry key="mapToPojo" value="map转换为类" />
+    </util:map>
+    
+    <util:map id="selectDigestType" map-class="java.util.LinkedHashMap">
+        <beans:entry key="spring-md5" value="spring-md5加密" />
+        <beans:entry key="codec-md5" value="codec-md5加密" />
+        <beans:entry key="codec-sha1" value="codec-sha1加密" />
+        <beans:entry key="codec-base64" value="codec-base64加密（可逆）" />
+    </util:map>
+
+    <util:map id="selectWeight" map-class="java.util.LinkedHashMap">
+        <beans:entry key="default" value="默认" />
+        <beans:entry key="lighter" value="较细" />
+        <beans:entry key="bold" value="较粗" />
+        <beans:entry key="bolder" value="最粗" />
+    </util:map>
+    
+    <util:map id="selectTxType" map-class="java.util.LinkedHashMap">
+        <beans:entry key="interceptor" value="拦截器" />
+        <beans:entry key="tag" value="标签" />
+        <beans:entry key="annotation" value="注解" />
+    </util:map>
+    
+    <util:map id="selectAlign" map-class="java.util.LinkedHashMap">
+        <beans:entry key="default" value="默认" />
+        <beans:entry key="left" value="左对齐" />
+        <beans:entry key="right" value="右对齐" />
+        <beans:entry key="center" value="居中" />
+        <beans:entry key="justify" value="两端对齐" />
+    </util:map>
+    
+    <util:map id="selectTextDecoration" map-class="java.util.LinkedHashMap">
+        <beans:entry key="default" value="默认" />
+        <beans:entry key="underline" value="下划线" />
+        <beans:entry key="overline" value="上划线" />
+        <beans:entry key="line-through" value="删除线" />
+        <beans:entry key="blink" value="闪烁" />
+    </util:map>
+    
+    <util:map id="selectUnit" map-class="java.util.LinkedHashMap">
+        <beans:entry key="default" value="默认" />
+        <beans:entry key="px" value="像素px" />
+        <beans:entry key="%" value="百分比%" />
+        <beans:entry key="em" value="倍数em" />
+    </util:map>
+    
+    <util:map id="selectFamily" map-class="java.util.LinkedHashMap">
+    	<beans:entry key="default" value="默认" />
+        <beans:entry key="SimSun" value="宋体" />
+        <beans:entry key="SimHei" value="黑体" />
+        <beans:entry key="Microsoft YaHei" value="微软雅黑" />
+        <beans:entry key="Microsoft JhengHei" value="微软正黑体" />
+        <beans:entry key="NSimSun" value="新宋体" />
+        <beans:entry key="PMingLiU" value="新细明体" />
+        <beans:entry key="MingLiU" value="细明体" />
+        <beans:entry key="DFKai-SB" value="标楷体" />
+        <beans:entry key="FangSong" value="仿宋" />
+        <beans:entry key="KaiTi" value="楷体" />
+        <beans:entry key="FangSong_GB2312" value="仿宋_GB2312" />
+        <beans:entry key="KaiTi_GB2312" value="楷体_GB2312" />
+    </util:map>
+    
+</beans:beans>

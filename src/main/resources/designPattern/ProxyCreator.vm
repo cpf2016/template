@@ -1,0 +1,33 @@
+#if($type && $type=="static")
+
+public final class ProxyCreator {
+	public static Object createProxy(${interfaceName} ${instanceName}){
+		return new ${className}Proxy(${instanceName}));
+	}
+}
+#end
+
+#if($type && $type=="jdk")
+import java.lang.reflect.Proxy;
+
+public final class ProxyCreator {
+	public static Object createProxy(${interfaceName} ${instanceName}){
+		return Proxy.newProxyInstance(${instanceName}.getClass().getClassLoader(), 
+                ${instanceName}.getClass().getInterfaces(), new ${className}Proxy(${instanceName}));
+	}
+}
+#end
+
+#if($type && $type=="cglib")
+import net.sf.cglib.proxy.Enhancer;
+
+public final class ProxyCreator {
+	public static Object createProxy(Class<?> clazz){
+		Enhancer enhancer = new Enhancer();
+		enhancer.setSuperclass(clazz);  
+		enhancer.setCallback(new ${className}Proxy()); 
+		
+		return enhancer.create();
+	}
+}
+#end

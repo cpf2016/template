@@ -1,0 +1,37 @@
+#if($type && $type=="static")
+import org.junit.Test;
+
+public class ${className}Test {
+
+	@Test
+	public void test() {
+		${className} ${instanceName} = new ${className}();
+		${interfaceName} proxy = ${className}Proxy(${instanceName});  
+	}
+
+}
+#end
+#if($type && $type=="jdk")
+import org.junit.Test;
+
+public class ${className}Test {
+
+	@Test
+	public void test() {
+		${interfaceName} ${instanceName} = (${interfaceName}) ProxyCreator.createProxy(new ${className}());
+	}
+
+}
+#end
+#if($type && $type=="cglib")
+import org.junit.Test;
+
+public class ${className}Test {
+
+	@Test
+	public void test() {
+		${className} ${instanceName} = (${className}) ProxyCreator.createProxy(${className}.class);
+	}
+
+}
+#end

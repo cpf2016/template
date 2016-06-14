@@ -1,0 +1,410 @@
+$page.setTitle("创建Date工具类")
+
+<form action="" method="post" role="form" class="form-horizontal">
+    $csrfToken.hiddenField
+    <input type="hidden" name="action" value="create_date_action"/>
+
+	#set ($group = $form.createDate.defaultInstance)
+
+    <div class="form-group blank-space">
+      <label class="col-sm-2 control-label">请选择转换方式：</label>
+      	<div class="col-sm-10">
+      	#select ($group.type.key $selectDateType $group.type.value "-- 请选择工具的实现方式 --")
+      </div>
+    </div>
+    
+    
+    <fieldset style="margin:100px 10px">
+   		<legend style="color:red">前提1：构造Joda DateTime实例：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+      			<div>
+      				<div class="col-sm-3">
+      					#select ($group.createType.key $selectCreateDateType $group.createType.value "-- 请选择时间单位 --")
+      				</div>
+      			</div>
+   			</fieldset>
+    	</div>
+    </fieldset>
+    
+    <fieldset style="margin:30px 10px">
+   		<legend style="color:red">前提2：设置时区（设置一次那么所有操作用的就是这个时区）：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="setTimeZone"/>
+						<span> 设置时区（使用类似“Asia/Tokyo”或“+09”均可）：setTimeZone </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+    </fieldset>
+    
+    <fieldset style="margin:100px 10px">
+   		<legend>（1）获取年月日时分秒：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+   				<legend style="margin:10px 10px 10px 80px">年：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getYear"/>
+						<span> 获取年份：getYear </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.methods.key" value="getYearOfCentury"/>
+						<span> 获取是本世纪的多少年：getYearOfCentury </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+
+    	<div class="form-group blank-space">
+    		<fieldset>
+   				<legend style="margin:10px 10px 10px 80px">月：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getMonth"/>
+						<span> 获取月：getMonth </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+    	
+    	<div class="form-group blank-space">
+    		<fieldset>
+   				<legend style="margin:10px 10px 10px 80px">日：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getDay"/>
+						<span> 获取日：getDay </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.methods.key" value="getDayOfWeek"/>
+						<span> 获取是本周的第几天：getDayOfWeek </span>
+      				</label>
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getDayOfYear"/>
+						<span> 获取是本年的第几天：getDayOfYear </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+
+    	<div class="form-group blank-space">
+    		<fieldset>
+   				<legend style="margin:10px 10px 10px 80px">时：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getHour"/>
+						<span> 获取时(24时制)：getHour </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+    	
+    	<div class="form-group blank-space">
+    		<fieldset>
+    			<legend style="margin:10px 10px 10px 80px">分：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getMinute"/>
+						<span> 获取分：getMinute </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.methods.key" value="getMinuteOfDay"/>
+						<span> 获取在一天中分钟数：getMinuteOfDay </span>
+      				</label>
+      			</div>
+		    </fieldset>
+    	</div>
+    	
+    	<div class="form-group blank-space">
+    		<fieldset>
+    			<legend style="margin:10px 10px 10px 80px">秒：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getSecond"/>
+						<span> 获取秒：getSecond </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.methods.key" value="getSecondOfDay"/>
+						<span> 获取在一天中秒数：getSecondOfDay </span>
+      				</label>
+      			</div>
+		    </fieldset>
+    	</div>
+    	
+    	<div class="form-group blank-space">
+    		<fieldset>
+    			<legend style="margin:10px 10px 10px 80px">毫秒：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getMillis"/>
+						<span> 获取毫秒：getMillis </span>
+      				</label>
+      			</div>
+		    </fieldset>
+    	</div>
+    </fieldset>
+
+
+    <fieldset style="margin:100px 10px">
+   		<legend>（2）单个日期自身加减：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+      			<div>
+      				<div class="col-sm-3">
+      					#select ($group.dateUnit.key $selectDateUnitType $group.dateUnit.value "-- 请选择时间单位 --")
+      				</div>
+      				<div class="col-sm-4">
+      					#select ($group.operateType.key $selectDateOperateType $group.operateType.value "-- 请选择时间操作方式 --")
+      				</div>
+      				<div class="col-sm-5">
+						<input type="text" name="$group.number.key" value="$!group.number.value"/>
+      				</div>
+      			</div>
+   			</fieldset>
+    	</div>
+    </fieldset>
+    
+    <fieldset style="margin:100px 10px">
+   		<legend>（3）获取指定年月日时分秒的开始与结束时间：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+   				<legend style="margin:10px 10px 10px 80px">年：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getYearBeginTime"/>
+						<span> 获取年开始时间（yyyy-01-01 00:00:00:0）：getYearBeginTime </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.methods.key" value="getYearEndTime"/>
+						<span> 获取年结束时间（yyyy-12-31 23:59:59:999）：getYearEndTime </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+
+    	<div class="form-group blank-space">
+    		<fieldset>
+   				<legend style="margin:10px 10px 10px 80px">月：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getMonthBeginTime"/>
+						<span> 获取月开始时间（yyyy-MM-01 00:00:00:0）：getMonthBeginTime  </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.methods.key" value="getMonthEndTime"/>
+						<span> 获取月结束时间（yyyy-MM-01 23:59:59:999）：getMonthEndTime  </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+    	
+    	<div class="form-group blank-space">
+    		<fieldset>
+   				<legend style="margin:10px 10px 10px 80px">日：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getDayBeginTime"/>
+						<span> 获取日开始时间（yyyy-MM-dd 00:00:00:0）：getDayBeginTime  </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.methods.key" value="getDayEndTime"/>
+						<span> 获取日结束时间（yyyy-MM-dd 23:59:59:999）：getDayEndTime   </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+
+    	<div class="form-group blank-space">
+    		<fieldset>
+   				<legend style="margin:10px 10px 10px 80px">时：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getHourBeginTime"/>
+						<span> 获取时开始时间（yyyy-MM-dd HH:00:00:0）：getHourBeginTime   </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.methods.key" value="getHourEndTime"/>
+						<span> 获取时结束时间（yyyy-MM-dd HH:59:59:999）：getHourEndTime   </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+    	
+    	<div class="form-group blank-space">
+    		<fieldset>
+    			<legend style="margin:10px 10px 10px 80px">分：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getMinuteBeginTime"/>
+						<span> 获取分开始时间（yyyy-MM-dd HH:mm:00:0）：getMinuteBeginTime    </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.methods.key" value="getMinuteEndTime"/>
+						<span> 获取分结束时间（yyyy-MM-dd HH:mm:59:999）：getMinuteEndTime     </span>
+      				</label>
+      			</div>
+		    </fieldset>
+    	</div>
+    	
+    	<div class="form-group blank-space">
+    		<fieldset>
+    			<legend style="margin:10px 10px 10px 80px">秒：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="getSecondBeginTime"/>
+						<span> 获取秒开始时间（yyyy-MM-dd HH:mm:ss:0）：getSecondBeginTime    </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.methods.key" value="getSecondEndTime"/>
+						<span> 获取秒结束时间（yyyy-MM-dd HH:mm:ss:999）：getSecondEndTime     </span>
+      				</label>
+      			</div>
+		    </fieldset>
+    	</div>
+    	
+    </fieldset>
+    
+    <fieldset style="margin:100px 10px">
+   		<legend>（4）两个日期比较：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+      			<div>
+      				<div class="col-sm-3">
+      					#select ($group.dateCompare.key $selectCompareType $group.dateCompare.value "-- 请选择时间单位 --")
+      				</div>
+      			</div>
+   			</fieldset>
+    	</div>
+    </fieldset>
+    
+    <fieldset style="margin:100px 10px">
+   		<legend>（5）两个日期相差计算：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+      			<div>
+      				<div class="col-sm-3">
+      					#select ($group.dateBetween.key $selectDateUnitType $group.dateBetween.value "-- 请选择时间单位 --")
+      				</div>
+      			</div>
+   			</fieldset>
+    	</div>
+    </fieldset>
+    
+    <fieldset style="margin:100px 10px">
+   		<legend>（6）DateTime与JDK日期的相互转换：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+   				<legend style="margin:10px 10px 10px 80px">DateTime与Date转换：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="jodaToDate"/>
+						<span> DateTime转换为Date：jodaToDate </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.methods.key" value="dateToJoda"/>
+						<span> Date转换为DateTime：dateToJoda </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+    	
+    	<div class="form-group blank-space">
+    		<fieldset>
+   				<legend style="margin:10px 10px 10px 80px">DateTime与Calendar转换：</legend>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="jodaToDate"/>
+						<span> DateTime转换为Calendar：jodaToCalendar </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+    </fieldset>
+    
+    <fieldset>
+   		<legend>（7）DateTime与String日期的相互转换：</legend>
+   		
+    	<div class="form-group blank-space">
+    		<fieldset>
+      			<div class="checkbox">
+      				<label class="col-sm-3">
+      				</label>
+      				<label class="col-sm-4">
+						<input type="checkbox" name="$group.methods.key" value="dateTimeToString"/>
+						<span> DateTime转换为String：dateTimeToString </span>
+      				</label>
+      				<label class="col-sm-5">
+						<input type="checkbox" name="$group.methods.key" value="stringToDateTime"/>
+						<span> String转换为DateTime：stringToDateTime </span>
+      				</label>
+      			</div>
+   			</fieldset>
+    	</div>
+    </fieldset>
+    
+    
+	<div class="row blank-space">
+      <div class="col-md-3">
+      </div>
+	  <div class="col-md-2">
+	  	<input type="submit" name="event_submit_do_create" class="btn btn-primary btn-lg"/>
+      </div>
+      <div class="col-md-2">
+	    <input type="button" name="reset" value="清空" class="btn btn-primary btn-lg "/>
+      </div>
+	</div>
+</form>
+
+
+<pre>
+	<code>
+		$dateResult
+	</code>
+</pre>
+

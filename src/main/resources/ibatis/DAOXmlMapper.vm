@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" ><br/>
+
+<sqlMap namespace="${namespace}">
+	<typeAlias alias="${pojoName}"
+		type="${qualifiedName}" />
+	#if($columnInfos)
+	<resultMap id="${typeName}Result" class="${pojoName}">
+		#foreach($column in $columnInfos)
+		<result column="$column.ColumnName" property="$column.PropertyName" jdbcType="$column.ColumnType" />
+		#end
+	</resultMap>
+	#end
+	
+	#if($columnInfos)
+	<sql id="columns">
+		#foreach($column in $columnInfos)
+			#if($velocityCount==1)
+				$column.ColumnName
+			#else
+				,$column.ColumnName
+			#end
+		#end
+	</sql>
+	#end
+	
+	#set( $create = "gmtCreate" )
+	#set( $modified = "gmtModified" )
+	#macro(replaceTime $column)
+		#if($column.PropertyName==$create || $column.PropertyName==$modified)
+	        now()
+		#else
+			#$column.PropertyName#
+		#end
+	#end
+	
+	#if($columnInfos)
+	<sql id="columnsValue">
+		#foreach($column in $columnInfos)
+			#if($velocityCount==1)
+				#replaceTime($column)
+			#else
+				,#replaceTime($column)
+			#end
+		#end
+	</sql>
+	#end
+	
+	#if($insert || $insertBatch)
+	<!-- insert into 基本语句 -->
+	<insert id="insert${typeName}" parameterClass="${pojoName}">
+		insert into ${tableName} (
+		<include refid="columns" />
+		)
+		values
+		(
+		<include refid="columnsValue" />
+		)
+	</insert>
+	#end
+
+	#if($delete)
+	<delete id="delete${typeName}" parameterClass="long">
+		delete from ${tableName}
+		where id = #id#
+	</delete>
+	#end
+
+	#if($deleteBatch)
+	<delete id="deleteBatch" parameterClass="${pojoName}">
+		delete from ${tableName}
+		where id = #id#
+	</delete>
+	#end
+
+	#if($update)
+	<!-- update 基本语句 -->
+	<update id="update${typeName}" parameterClass="${pojoName}">
+		update ${tableName}
+		set gmt_modified=now()
+		#foreach($column in $columnInfos)
+			<isNotNull prepend="," property=$column.PropertyName>
+				$column.ColumnName=#$column.PropertyName#
+			</isNotNull>
+		#end
+		where id=#id#
+	</update>
+	#end
+
+	#if($findById)
+	<select id="find${typeName}ById" parameterClass="long" resultClass="${pojoName}">
+    		select <include refid="columns" />
+    		from ${tableName}
+    		where id = #id# 
+	</select>
+	#end
+	
+	#if($list)
+	<select id="list${typeName}" parameterClass="${pojoName}" resultClass="${pojoName}">
+    	select <include refid="columns" />
+    	from ${tableName}
+    	<dynamic prepend="where">
+    		#foreach($column in $columnInfos)
+				<isNotNull prepend="and" property="$column.PropertyName">
+					$column.ColumnName=#$column.PropertyName#
+				</isNotNull>
+			#end
+		</dynamic>
+	</select>
+	#end
+	
+	#if($listWithLimit)
+		<select id="list${typeName}WithLimit" parameterClass="cm.alibaba.icbu.first.ibatis.dao.PageQuery" resultClass="${pojoName}">
+		select <include refid="columns" />
+		from ${tableName}
+		<dynamic prepend="where">
+    		#foreach($column in $columnInfos)
+				<isNotNull prepend="and" property="params.$column.PropertyName">
+					$column.ColumnName=#params.$column.PropertyName#
+				</isNotNull>
+			#end
+		</dynamic>
+		<dynamic prepend="LIMIT">
+        	<isNotEmpty property="start" >
+       		 <![CDATA[
+            	#start:INTEGER#,#pageSize:INTEGER#
+        	]]>
+      		</isNotEmpty>
+    	</dynamic>
+	</select>
+	
+	<select id="count${typeName}" parameterClass="${pojoName}" resultClass="int">
+		select count(*)
+		from ${tableName}
+		<dynamic prepend="where">
+    		#foreach($column in $columnInfos)
+				<isNotNull prepend="and" property="$column.PropertyName">
+					$column.ColumnName=#$column.PropertyName#
+				</isNotNull>
+			#end
+		</dynamic>
+	</select>
+	#end
+
+</sqlMap>

@@ -1,0 +1,170 @@
+/*
+ * Copyright 1999-2004 Alibaba.com All right reserved. This software is the confidential and proprietary information of
+ * Alibaba.com ("Confidential Information"). You shall not disclose such Confidential Information and shall use it only
+ * in accordance with the terms of the license agreement you entered into with Alibaba.com.
+ */
+package cm.alibaba.icbu.first.ibatis.dao;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.orm.ibatis.SqlMapClientCallback;
+import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
+import org.springframework.util.StringUtils;
+
+import com.ibatis.sqlmap.client.SqlMapExecutor;
+
+
+/**
+ * DAO基础类
+ */
+@SuppressWarnings("deprecation")
+public class BaseDAOImpl<T> extends SqlMapClientDaoSupport {
+
+    private GroupSequence sequence;
+
+    public void setSequence(GroupSequence sequence) {
+        this.sequence = sequence;
+    }
+
+    protected final Log logger = LogFactory.getLog(getClass());
+
+    protected Long allocateId() {
+        try {
+            return sequence.nextValue();
+        } catch (SequenceException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 用于分页查询,返回分页结果及总条数
+     * 
+     * @param selStmName
+     * @param cntStmName
+     * @param query
+     * @param maxCount 返回的最大条数，-1表示不限制
+     * @return
+     */
+	@SuppressWarnings("unchecked")
+	public List<T> executeQueryForList(String selStmName, String cntStmName, PageQuery query, int maxCount) {
+        List<T> result = null;
+
+        if (StringUtils.isEmpty(selStmName) || StringUtils.isEmpty(cntStmName) || (query == null)) {
+            return null;
+        }
+
+        // 得到数据记录总数
+        Integer countNumber = (Integer) getSqlMapClientTemplate().queryForObject(cntStmName, (T)query.getParams());
+        if (maxCount!=-1 && countNumber>maxCount) {
+            throw new RuntimeException(cntStmName + "查询条数过多，超过" + maxCount + "条!");
+        }
+
+        if (countNumber != null) {
+            // 设置当前查询的记录总数
+            query.setTotalItem(countNumber.intValue());
+            // 得到当前页的数据集
+            result = getSqlMapClientTemplate().queryForList(selStmName, query);
+        }
+
+        return result;
+    }
+
+    /**
+     * 用于分页查询,返回分页结果及总条数
+     * 
+     * @param selStmName
+     * @param cntStmName
+     * @param query
+     * @return
+     */
+    @SuppressWarnings("rawtypes")
+    public List executeQueryForList(String selStmName, String cntStmName, PageQuery query) {
+        return this.executeQueryForList(selStmName, cntStmName, query, -1);
+    }
+
+    /**
+     * 返回查询列表
+     * 
+     * @param statementName
+     * @param parameterObject
+     * @return
+     * @throws org.springframework.dao.DataAccessException
+     */
+    @SuppressWarnings("unchecked")
+	protected List<T> queryForList(String statementName, Object parameterObject) {
+		List<T> resultList = this.getSqlMapClientTemplate().queryForList(statementName, parameterObject);
+        return resultList;
+
+    }
+
+    /**
+     * 查询返回Object
+     * 
+     * @param statementName
+     * @param parameterObject
+     * @return
+     */
+    protected Object queryForObject(String statementName, Object parameterObject) {
+		Object returnObject = this.getSqlMapClientTemplate().queryForObject(statementName, parameterObject);
+        return returnObject;
+    }
+
+    /**
+     * 数据批操作，主要指批插入
+     * 
+     * @param stList 操作参数对象集合
+     * @return int 操作的记录数，操作失败时返回-1
+     */
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public Integer executeInsertBatch(final String sqlID, final List<T> stList) {
+        Integer result = new Integer(-1);
+        if ((sqlID != null) && (stList != null) && !stList.isEmpty()) {
+            result = (Integer) getSqlMapClientTemplate().execute(new SqlMapClientCallback() {
+
+                public Object doInSqlMapClient(SqlMapExecutor executor) throws SQLException {
+                    Integer result = new Integer(-1);
+                    executor.startBatch();
+                    for (int i = 0; i < stList.size(); i++) {
+                        executor.insert(sqlID, stList.get(i));
+                    }
+                    result = new Integer(executor.executeBatch());
+                    return result;
+                }
+            });
+        }
+        return result;
+    }
+
+
+    /**
+     * 数据批操作，批量删除
+     * 
+     * @param stList 操作参数对象集合
+     * @return int 操作的记录数，操作失败时返回-1
+     */
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public Integer executeDeleteBatch(final String sqlID, final List<T> stList) {
+        Integer result = new Integer(-1);
+        if ((sqlID != null) && (stList != null) && !stList.isEmpty()) {
+            result = (Integer) getSqlMapClientTemplate().execute(new SqlMapClientCallback() {
+
+                public Object doInSqlMapClient(SqlMapExecutor executor) throws SQLException {
+                    Integer result = new Integer(-1);
+                    executor.startBatch();
+                    for (int i = 0; i < stList.size(); i++) {
+                        executor.delete(sqlID, stList.get(i));
+                    }
+                    result = new Integer(executor.executeBatch());
+                    return result;
+                }
+            });
+        }
+        return result;
+    }
+
+}

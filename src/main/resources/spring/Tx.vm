@@ -1,0 +1,82 @@
+<!-- ======================================================================== -->
+<!-- MySQL TransactionManager denination -->
+<!-- ======================================================================== -->
+   need to define datasource
+#if($type=="interceptor")
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="txInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="txManager" />
+		<property name="transactionAttributes">
+			<props>
+              	<prop key="insert*">PROPAGATION_REQUIRED</prop> 
+				<prop key="delete*">PROPAGATION_REQUIRED</prop> 
+              	<prop key="update*">PROPAGATION_REQUIRED</prop> 
+              	<prop key="find*">PROPAGATION_REQUIRED,readOnly</prop> 
+              	<prop key="list*">PROPAGATION_REQUIRED,readOnly</prop> 
+			</props>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>*Service</value> note:intercept bean that name is end of 'Service'
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>txInterceptor</value>
+			</list>
+		</property>
+	</bean>
+#end
+#if($type=="tag")
+<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="insert*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="delete*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="update*" propagation="REQUIRED"
+				rollback-for="Exception" />
+			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="list*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="*" propagation="REQUIRES_NEW" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config proxy-target-class="false">
+		<aop:pointcut id="serviceMethod"
+		                           note:insert package name(end of service impl)
+			expression="execution(* cm.alibaba.icbu.first.ibatis.service.impl.*.*(..))" />
+		<aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice" />
+	</aop:config>
+#end
+#if($type=="annotation")
+	 <context:annotation-config/> 
+	 								note:insert package name(under which class will be load for spring)
+     <context:component-scan  base-package ="cm.alibaba.icbu.first.ibatis"/> 
+     <tx:annotation-driven  transaction-manager ="txManager" />
+      
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	note:enter namespace of context
+	xmlns:context ="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd" 
+#end
